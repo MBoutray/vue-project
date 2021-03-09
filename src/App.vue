@@ -1,26 +1,47 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <header class="columns is-centered">
+    <nav class="navbar column is-10">
+      <ul class="navbar-menu has-background-primary-light">
+        <div class="navbar-start">
+          <li class="navbar-item"><router-link :to="{ name: 'home' }">Accueil</router-link></li>
+          <li class="navbar-item"><router-link :to="{ name: 'blog' }">Blog</router-link></li>
+        </div>
+        <div class="navbar-end">
+          <li v-if="!isConnected" class="navbar-item"><router-link :to="{ name: 'login' }">Se connecter</router-link></li>
+          <li v-if="isConnected" class="navbar-item"><router-link :to="{ name: 'admin' }">Admin</router-link></li>
+          <li v-if="isConnected" class="navbar-item"><a href="#" @click="logOut">Se déconnecter</a></li>
+        </div>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <router-view></router-view>
+  </main>
+
+
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import { mapGetters, mapMutations } from 'vuex';
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+  },
+  methods: {
+    ...mapMutations([
+        'logOut'
+    ])
+  },
+  computed: {
+    ...mapGetters([
+        'isConnected'
+    ])
   }
 }
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<style scoped>
+
 </style>
