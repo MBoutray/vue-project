@@ -3,15 +3,25 @@ import {createStore} from "vuex";
 export default createStore({
     state: {
         posts: [
-            // {
-            //     id: 1,
-            //     title: 'test',
-            //     image: '',
-            //     content: '',
-            //     metaTitle: '',
-            //     metaDescription: ''
-            // }
-        ]
+            {
+                id: 1,
+                title: 'test',
+                image: '',
+                content: '',
+                metaTitle: '',
+                metaDescription: ''
+            }
+        ],
+        users: [
+            {
+                id: 1,
+                email: 'test@test.com',
+                password: 'test',
+                firstName: 'test',
+                lastName: 'von tester'
+            }
+        ],
+        currentUser: 1
     },
     mutations: {
         addPost: (state, post) => {
@@ -40,6 +50,9 @@ export default createStore({
                 metaTitle: post.metaTitle,
                 metaDescription: post.metaDescription
             });
+        },
+        logOut: (state) => {
+            state.currentUser = null;
         }
     },
     getters: {
@@ -51,6 +64,9 @@ export default createStore({
         },
         getPostIndex: state => id => {
             return state.posts.findIndex(elem => elem.id === id);
+        },
+        isConnected: state => {
+            return state.currentUser != null;
         }
     }
 })
